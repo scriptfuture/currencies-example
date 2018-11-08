@@ -1,5 +1,6 @@
 # Курсы валют на React + Redux
 
+Приложение использует API сервиса https://www.cryptonator.com/api/ 
 
 ## Установка
 
@@ -26,3 +27,6 @@ yarn start
 ```bash
 yarn build
 ```
+
+## Скриншот
+![Скриншот](screenshot.png)
