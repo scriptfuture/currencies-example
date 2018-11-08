@@ -50,12 +50,12 @@ export default (state = initialState, action) => {
       
     case REMOVECURRENCY:
     
-    console.log(state.currencies.filter((obj) => !(obj.ticker.base.toLowerCase() === action.pairParameter1.toLowerCase() && obj.ticker.target.toLowerCase() === action.pairParameter2.toLowerCase())));
-    
+
 
       return {
         ...state,
-        currencies: state.currencies.filter((obj) => !(obj.ticker.base.toLowerCase() === action.pairParameter1.toLowerCase() && obj.ticker.target.toLowerCase() === action.pairParameter2.toLowerCase())),
+        currencies: state.currencies.filter((obj) => 
+                          !(obj.ticker.base.toLowerCase() === action.pairParameter1.toLowerCase() && obj.ticker.target.toLowerCase() === action.pairParameter2.toLowerCase())),
         errors: [],
 		isError: false,
         isLoad: false
@@ -83,10 +83,10 @@ export default (state = initialState, action) => {
   }
 }
 
-// подгружаем последовательно пары, что бы не нагружать сервер
+// подгружаем пары асинхронно
 async function getCurrenciesQuery(callback) {
     
-      let currenciesStr = localStorage.getItem('currencies'), currenciesResult = [];
+      let currenciesStr = localStorage.getItem('currencies'), promises = [];
       
       if(currenciesStr !== null && currenciesStr !== "") {
           
@@ -102,18 +102,23 @@ async function getCurrenciesQuery(callback) {
           for(let i in currencies) {
               
               try {
-                  currenciesResult.push(await axios.get('https://api.cryptonator.com/api/ticker/'+ currencies[i]["base"] + '-' + currencies[i]["target"]));
+                  promises.push(axios.get('https://api.cryptonator.com/api/ticker/'+ currencies[i]["base"] + '-' + currencies[i]["target"]));
               } catch (err) {
                   console.log("Network Error");
               }
           }
+
+          let results = await Promise.all(promises);
           
-      }
-      
-      // убираем лишние данные
-      currenciesResult = currenciesResult.map((obj) => obj.data);
-      
-      callback(currenciesResult);
+          // убираем лишние данные
+          results = results.map((obj) => obj.data).filter((obj) => obj.success);
+          
+          callback(results) 
+
+      } else {
+          
+          callback([]);
+      } // end if
 }
 
 export const getCurrencies = () => {

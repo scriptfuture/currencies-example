@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { Preloader } from '../../components/preloader/preloader'
+import { Errors } from '../../components/errors/errors'
+
 import { getCurrencies, removeCurrency } from '../../modules/currencies'
 
 
@@ -53,6 +56,7 @@ class Currencies extends Component {
 	  
 	  return (
 		   <div>
+            <Preloader isShow={this.props.isLoad} />
            
            {this.getCurrencies()}
            <div className="item-clear"></div>

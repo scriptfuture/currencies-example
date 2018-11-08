@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 
-import { Preloader } from '../../components/preloader/preloader'
 import { Errors } from '../../components/errors/errors'
 import { newCurrency } from '../../modules/currencies'
 
@@ -46,8 +45,7 @@ class NewNote extends Component {
 
 	  
 	  return (
-		  <div className="page-form">
-            <Preloader isShow={this.props.isLoad} />
+		  <div>
           
 		    <h1>Новая пара валют</h1>
             <br />
@@ -87,7 +85,6 @@ class NewNote extends Component {
 
 const mapStateToProps = ({ currencies }) => ({
 
-    isLoad: currencies.isLoad,
     isError: currencies.isError,
     errors: currencies.errors 
   
