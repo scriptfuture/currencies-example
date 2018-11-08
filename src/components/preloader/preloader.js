@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './preloader.css'
+import './preloader.less'
 
 export const Preloader = ({ isShow }) => {return (
     <div className={isShow?"preloader-1":"preloader-1 preloader-hide"}>

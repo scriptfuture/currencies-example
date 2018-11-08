@@ -6,7 +6,7 @@ import store, { history } from './store'
 import App from './containers/app'
 
 
-import './index.css'
+import './index.less'
 
 
 const target = document.querySelector('#root')

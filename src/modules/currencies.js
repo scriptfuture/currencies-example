@@ -65,7 +65,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currencies: {},
-        isLoad: true
+        isLoad: true,
+        errors: [],
+		isError: false,
         
       }
 
@@ -73,7 +75,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currencies: action.currencies,
-        isLoad: false
+        isLoad: false,
+        errors: [],
+		isError: false,
       }
 	  
  
@@ -116,8 +120,6 @@ async function getCurrenciesQuery(callback) {
           } catch (err) {
                         
               callback([], "Network Error");
-              
-              console.log("Network Error");
           }
           
 

@@ -1,0 +1,67 @@
+.preloader-1 {
+  margin: 0 auto;
+  position:relative;
+  margin-top: -32px;
+  
+  width: 70px;
+  height: 12px;
+  
+  color: black;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  
+  .line {
+      width: 1px;
+      height: 12px;
+      background: black;
+      margin: 0 1px;
+      display: inline-block;
+      animation: opacity-1 1000ms infinite ease-in-out;
+  }
+  
+  .line-1 { animation-delay: 800ms; }
+  .line-2 { animation-delay: 600ms; }
+  .line-3 { animation-delay: 400ms; }
+  .line-4 { animation-delay: 200ms; }
+  .line-6 { animation-delay: 200ms; }
+  .line-7 { animation-delay: 400ms; }
+  .line-8 { animation-delay: 600ms; }
+  .line-9 { animation-delay: 800ms; }
+
+}
+
+
+.preloader-hide {
+    display: none;
+}
+
+
+@keyframes opacity-1 { 
+  0% { 
+    opacity: 1;
+  }
+  50% { 
+    opacity: 0;
+  }
+  100% { 
+    opacity: 1;
+  }  
+}
+
+@keyframes opacity-2 { 
+  0% { 
+    opacity: 1;
+    height: 15px;
+  }
+  50% { 
+    opacity: 0;
+    height: 12px;
+  }
+  100% { 
+    opacity: 1;
+    height: 15px;
+  }  
+}
