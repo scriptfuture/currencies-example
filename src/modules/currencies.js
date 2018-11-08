@@ -98,22 +98,28 @@ async function getCurrenciesQuery(callback) {
           } catch (err) {
               console.log(err);
           }
+          
 
-          for(let i in currencies) {
-              
-              try {
-                  promises.push(axios.get('https://api.cryptonator.com/api/ticker/'+ currencies[i]["base"] + '-' + currencies[i]["target"]));
-              } catch (err) {
-                  console.log("Network Error");
+          try {
+            
+              for(let i in currencies) {
+                      promises.push(axios.get('https://api.cryptonator.com/api/ticker/'+ currencies[i]["base"] + '-' + currencies[i]["target"]));
               }
-          }
 
-          let results = await Promise.all(promises);
+              let results = await Promise.all(promises);
+              
+              // убираем лишние данные
+              results = results.map((obj) => obj.data).filter((obj) => obj.success);
+              
+              callback(results) 
           
-          // убираем лишние данные
-          results = results.map((obj) => obj.data).filter((obj) => obj.success);
+          } catch (err) {
+                        
+              callback([], "Network Error");
+              
+              console.log("Network Error");
+          }
           
-          callback(results) 
 
       } else {
           
@@ -128,12 +134,24 @@ export const getCurrencies = () => {
     });
 
 
-    getCurrenciesQuery(function(currencies) {
+    getCurrenciesQuery(function(currencies, error) {
 
-        dispatch({
-            type: GETCURRENCIES,
-            currencies: currencies
-        });
+        if(typeof error !== "undefined") {
+    
+              dispatch({
+                  type: SHOW_ERROR,
+                  errors: [{text: error}]
+              });
+        
+        } else {
+            
+            dispatch({
+                type: GETCURRENCIES,
+                currencies: currencies
+            });
+            
+        } // end if
+        
     });
     
        

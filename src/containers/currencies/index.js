@@ -57,6 +57,8 @@ class Currencies extends Component {
 	  return (
 		   <div>
             <Preloader isShow={this.props.isLoad} />
+            
+            <Errors isError={this.props.isError} errors={this.props.errors}/>
            
            {this.getCurrencies()}
            <div className="item-clear"></div>
