@@ -14,28 +14,35 @@ class NewNote extends Component {
        super();
    
        this.state = {
-           isSuccess: false
+           isSuccess: false,
+           pairParameter1: "USD",
+           pairParameter2: "RUR"
        };
+      
+       this.handleChange = this.handleChange.bind(this);
+       this.handleSubmit = this.handleSubmit.bind(this);
 
   } 
   
   componentDidMount() {} 
   
-  handleSubmit(event, self) {
-        event.preventDefault();
-        event.stopPropagation();
+  handleChange(event) {
 
-        const pairParameter1 = self.refs.pairParameter1.value;
-        const pairParameter2 = self.refs.pairParameter2.value;
-
+     let obj = {};
+     obj[event.target.name] = event.target.value;
+      
+     this.setState(obj);
+  }
+  
+  handleSubmit(event) {
         
         // добавляем новую пару валют
-        self.props.newCurrency(pairParameter1, pairParameter2); 
+        this.props.newCurrency(this.state.pairParameter1, this.state.pairParameter2); 
                
-        self.setState({isSuccess: true});
+        this.setState({isSuccess: true});
  
         
-        return false;
+        event.preventDefault();
   }
 
   
@@ -58,15 +65,15 @@ class NewNote extends Component {
             <Errors isError={this.props.isError} errors={this.props.errors}/>
             
 		  
-			<form onSubmit={(e) => this.handleSubmit(e, this)} action="#" method="post">
+			<form onSubmit={this.handleSubmit} action="#" method="post">
 				<div className="form-group">
 					<label htmlFor="pairParameter1">Первый параметр</label><br />
-					<input type="text" id="pairParameter1" name="pairParameter1" className="form-control" ref='pairParameter1' defaultValue="USD"/>
+					<input type="text" id="pairParameter1" name="pairParameter1" className="form-control" value={this.state.pairParameter1} onChange={this.handleChange}/>
 				</div>
                 
 				<div className="form-group">
 					<label htmlFor="pairParameter2">Второй параметр</label><br />
-					<input type="text" id="pairParameter2" name="pairParameter2" className="form-control" ref='pairParameter2'  defaultValue="RUR"/>
+					<input type="text" id="pairParameter2" name="pairParameter2" className="form-control" value={this.state.pairParameter2} onChange={this.handleChange}/>
 				</div>
 				
 			    <p><button type="submit" className="btn btn-primary">Сохранить</button></p>
