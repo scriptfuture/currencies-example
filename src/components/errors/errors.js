@@ -51,10 +51,10 @@ export class Errors extends Component {
       return errors.map((err, index) => {
           
          if(typeof err.code !== "undefined" && typeof this.httpErrors["e" + err.code] !== "undefined") {
-              return (<div key={index + Math.random()}>{this.httpErrors["e" + err.code]}</div>);   
+              return (<div key={index}>{this.httpErrors["e" + err.code]}</div>);   
          } 
           
-         return (<div key={index + Math.random()}>{err.text}</div>);
+         return (<div key={index}>{err.text}</div>);
          
       });
 
